@@ -1,4 +1,4 @@
-package Finanzas05.Finanzas.reporte.domain.model.entities;
+package Finanzas05.Finanzas.factura.domain.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
