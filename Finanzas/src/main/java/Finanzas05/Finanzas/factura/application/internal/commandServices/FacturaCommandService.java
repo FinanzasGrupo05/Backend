@@ -21,24 +21,13 @@ public class FacturaCommandService implements IFacturaCommandService {
     @Override
     public Optional<Factura> handle(CreateFacturaCommand command) {
 
-        double tasaDescuentoCalculada = CreateFacturaCommand.calcularTasaDescuento(
-                command.tasaDescuento(),
-                command.tipoTasa(),
-                command.capitalizacion()
-        );
-
-        Factura nuevaFactura = new Factura(
-                null,
-                new Date(),
-                command.monto(),
-                command.fechaEmision(),
-                command.fechaVencimiento(),
-                (float) tasaDescuentoCalculada,
-                command.tipoTasa()
-        );
-
-        Factura facturaGuardada = facturaRepository.save(nuevaFactura);
-
-        return Optional.of(facturaGuardada);
+        Factura nuevaFactura = new Factura(command);
+        try {
+            Factura facturaGuardada = facturaRepository.save(nuevaFactura);
+            return Optional.of(facturaGuardada);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Optional.empty();
+        }
     }
 }

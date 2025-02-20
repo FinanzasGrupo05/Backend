@@ -1,5 +1,6 @@
 package Finanzas05.Finanzas.factura.domain.model.entities;
 
+import Finanzas05.Finanzas.factura.domain.model.commands.CreateFacturaCommand;
 import Finanzas05.Finanzas.factura.domain.model.valueobject.Capitalizacion;
 import Finanzas05.Finanzas.factura.domain.model.valueobject.Status;
 import Finanzas05.Finanzas.factura.domain.model.valueobject.TipoMoneda;
@@ -12,7 +13,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "Factura")
 public class Factura {
     @Id
@@ -48,6 +48,22 @@ public class Factura {
         this.tasaDescuento= tasaDescuento;
         this.tipoTasa= TipoTasa.Nominal;
         this.capitalizacion= Capitalizacion.Anual;
+    }
+
+    public Factura(CreateFacturaCommand command){
+        this.monto = command.monto();
+        this.fechaEmision = command.fechaEmision();
+        this.fechaVencimiento = command.fechaVencimiento();
+        this.gastosInicio = command.gastosInicio();
+        this.gastosFinal = command.gastosFinal();
+        this.tasaDescuento = (float) CreateFacturaCommand.calcularTasaDescuento(
+                command.tasaDescuento(),
+                command.tipoTasa(),
+                command.capitalizacion()
+        );
+
+        this.tipoTasa = command.tipoTasa();
+        this.capitalizacion = command.capitalizacion();
     }
 
 }

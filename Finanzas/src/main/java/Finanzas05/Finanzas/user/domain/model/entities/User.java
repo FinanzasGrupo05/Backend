@@ -2,13 +2,13 @@ package Finanzas05.Finanzas.user.domain.model.entities;
 
 import Finanzas05.Finanzas.user.domain.model.commands.CreateUserCommand;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @Entity
+@Table(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
-@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,9 @@ public class User {
     private String name;
     private String password;
 
+    public User(){}
     public User(Long id, String name, String password){
-        this.id= id;
+        this.id = id;
         this.name = name;
         this.password = password;
     }
