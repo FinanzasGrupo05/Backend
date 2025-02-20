@@ -1,6 +1,9 @@
 package Finanzas05.Finanzas.factura.domain.model.entities;
 
+import Finanzas05.Finanzas.factura.domain.model.valueobject.Capitalizacion;
 import Finanzas05.Finanzas.factura.domain.model.valueobject.Status;
+import Finanzas05.Finanzas.factura.domain.model.valueobject.TipoMoneda;
+import Finanzas05.Finanzas.factura.domain.model.valueobject.TipoTasa;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +20,7 @@ public class Factura {
     private Long id;
 
     //Fuera
-    private String tipoMoneda;
+    private TipoMoneda tipoMoneda;
     private Date fechaDescuento;
     private Status estado;
 
@@ -26,14 +29,16 @@ public class Factura {
     private Date fechaEmision;
     private Date fechaVencimiento;
     private Float tasaDescuento;
-    private String tipoTasa;
-    private String tipoCapital;
+    private TipoTasa tipoTasa;
+    private Capitalizacion capitalizacion;
     private Double gastosInicio;
     private Double gastosFinal;
 
-    public Factura(Long id, String tipoMoneda, Date fechaDescuento, Double monto, Date fechaEmision, Date fechaVencimiento, Float tasaDescuento, String tipoTasa, String tipoCapital){
+    public Factura(){}
+
+    public Factura(Long id, Date fechaDescuento, Double monto, Date fechaEmision, Date fechaVencimiento, Float tasaDescuento, TipoTasa tipoTasa){
         this.id= id;
-        this.tipoMoneda= tipoMoneda;
+        this.tipoMoneda= TipoMoneda.Soles;
         this.fechaDescuento= fechaDescuento;
         this.estado = Status.Pendiente;
 
@@ -41,8 +46,8 @@ public class Factura {
         this.fechaEmision= fechaEmision;
         this.fechaVencimiento= fechaVencimiento;
         this.tasaDescuento= tasaDescuento;
-        this.tipoTasa= tipoTasa;
-        this.tipoCapital= tipoCapital;
+        this.tipoTasa= TipoTasa.Nominal;
+        this.capitalizacion= Capitalizacion.Anual;
     }
 
 }
