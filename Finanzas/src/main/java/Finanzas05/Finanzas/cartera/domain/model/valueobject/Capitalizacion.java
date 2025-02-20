@@ -1,4 +1,4 @@
-package Finanzas05.Finanzas.factura.domain.model.valueobject;
+package Finanzas05.Finanzas.cartera.domain.model.valueobject;
 
 public enum Capitalizacion {
 

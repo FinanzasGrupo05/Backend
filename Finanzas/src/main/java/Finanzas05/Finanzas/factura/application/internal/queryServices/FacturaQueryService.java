@@ -1,7 +1,7 @@
 package Finanzas05.Finanzas.factura.application.internal.queryServices;
 
 import Finanzas05.Finanzas.factura.domain.model.entities.Factura;
-import Finanzas05.Finanzas.factura.domain.model.queries.GetAllFacturaQuery;
+import Finanzas05.Finanzas.factura.domain.model.queries.GetAllFacturasQuery;
 import Finanzas05.Finanzas.factura.domain.services.IFacturaQueryService;
 import Finanzas05.Finanzas.factura.infrastructure.repositories.jpa.IFacturaRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class FacturaQueryService implements IFacturaQueryService {
     }
 
     @Override
-    public List<Factura> handle(GetAllFacturaQuery query) {
+    public List<Factura> handle(GetAllFacturasQuery query) {
         return facturaRepository.findAll();
     }
 }
