@@ -4,6 +4,8 @@ import Finanzas05.Finanzas.user.application.internal.commandServices.UserCommand
 import Finanzas05.Finanzas.user.application.internal.queryServices.UserQueryService;
 import Finanzas05.Finanzas.user.domain.model.entities.User;
 import Finanzas05.Finanzas.user.domain.model.queries.GetAllUsersQuery;
+import Finanzas05.Finanzas.user.interfaces.rest.resources.UserResource;
+import Finanzas05.Finanzas.user.interfaces.rest.transformers.UserResourceFromEntityAssembler;
 import Finanzas05.Finanzas.user.interfaces.rest.resources.CreateUserResource;
 import Finanzas05.Finanzas.user.interfaces.rest.transformers.CreateUserCommandFromResourceAssembler;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -24,13 +27,14 @@ public class UserController {
         this.userCommandService = userCommandService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    @GetMapping()
+    public ResponseEntity<List<UserResource>> getAllUsers() {
 
         var getAllUsersQuery = new GetAllUsersQuery();
         var users = userQueryService.handle(getAllUsersQuery);
+        var usersResources = users.stream().map(UserResourceFromEntityAssembler::toResourceFromEntity).toList();
 
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return ResponseEntity.ok(usersResources);
     }
 
     @PostMapping

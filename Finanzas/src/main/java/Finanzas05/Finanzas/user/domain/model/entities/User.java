@@ -6,9 +6,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Getter
+
 @Setter
-@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +28,15 @@ public class User {
         this.password = command.password();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
