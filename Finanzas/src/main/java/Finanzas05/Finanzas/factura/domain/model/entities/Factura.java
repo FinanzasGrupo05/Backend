@@ -1,5 +1,6 @@
 package Finanzas05.Finanzas.factura.domain.model.entities;
 
+import Finanzas05.Finanzas.cartera.domain.model.entities.Cartera;
 import Finanzas05.Finanzas.factura.domain.model.commands.CreateFacturaCommand;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,15 +23,20 @@ public class Factura {
     private LocalDate emision;
     private LocalDate vencimiento;
 
+    @ManyToOne
+    @JoinColumn(name = "cartera_id")
+    private Cartera cartera;
+
     public Factura(){}
 
-    public Factura(Long id, String facturaName, String clienteName, Double monto, LocalDate emision, LocalDate vencimiento) {
+    public Factura(Long id, String facturaName, String clienteName, Double monto, LocalDate emision, LocalDate vencimiento, Cartera cartera) {
         this.id = id;
         this.facturaName = facturaName;
         this.clienteName = clienteName;
         this.monto = monto;
         this.emision = emision;
         this.vencimiento = vencimiento;
+        this.cartera = cartera;
     }
 
     public Factura(CreateFacturaCommand command){
@@ -65,6 +71,9 @@ public class Factura {
         return vencimiento;
     }
 
+    public void setCartera(Cartera cartera) {
+        this.cartera = cartera;
+    }
 
 
 }

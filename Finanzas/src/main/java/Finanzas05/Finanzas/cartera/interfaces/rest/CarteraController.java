@@ -4,8 +4,11 @@ import Finanzas05.Finanzas.cartera.application.internal.commandServices.CarteraC
 import Finanzas05.Finanzas.cartera.application.internal.queryServices.CarteraQueryService;
 import Finanzas05.Finanzas.cartera.domain.model.entities.Cartera;
 import Finanzas05.Finanzas.cartera.domain.model.queries.GetAllCarteraQuery;
-import Finanzas05.Finanzas.cartera.interfaces.rest.resources.CreateFacturaResource;
-import Finanzas05.Finanzas.cartera.interfaces.rest.transformers.CreateFacturaCommandFromResourceAssembler;
+import Finanzas05.Finanzas.cartera.interfaces.rest.resources.CarteraResource;
+import Finanzas05.Finanzas.cartera.interfaces.rest.resources.CreateCarteraResource;
+import Finanzas05.Finanzas.cartera.interfaces.rest.transformers.CarteraResourceFromEntityAssembler;
+import Finanzas05.Finanzas.cartera.interfaces.rest.transformers.CreateCarteraCommandFromResourceAssembler;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,30 +16,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value= "/cartera")
+@RequestMapping(value = "/cartera")
 public class CarteraController {
-
-    private final CarteraCommandService carteraCommandService;
     private final CarteraQueryService carteraQueryService;
+    private final CarteraCommandService carteraCommandService;
 
-    public CarteraController(CarteraCommandService carteraCommandService, CarteraQueryService carteraQueryService) {
-        this.carteraCommandService = carteraCommandService;
+    public CarteraController(CarteraQueryService carteraQueryService, CarteraCommandService carteraCommandService) {
         this.carteraQueryService = carteraQueryService;
+        this.carteraCommandService = carteraCommandService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Cartera>> getAllFacturas(){
-        var getAllFacturaQuery = new GetAllCarteraQuery();
-        var facturaList = carteraQueryService.handle(getAllFacturaQuery);
-        return new ResponseEntity<>(facturaList, HttpStatus.OK);
+    public ResponseEntity<List<CarteraResource>> getAllCartera(){
+        var getAllCarteraQuery = new GetAllCarteraQuery();
+        var cartera = carteraQueryService.handle(getAllCarteraQuery);
+        var carteraResources = cartera.stream().map(CarteraResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(carteraResources);
     }
 
     @PostMapping
-    public ResponseEntity<Cartera> createFactura(@RequestBody CreateFacturaResource createFacturaResource) {
-        var createFacturaCommand = CreateFacturaCommandFromResourceAssembler.toCommandFromResource(createFacturaResource);
-
-        var factura = carteraCommandService.handle(createFacturaCommand);
-
-        return factura.map(r -> new ResponseEntity<>(r, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    public ResponseEntity<Cartera> createCartera(@RequestBody CreateCarteraResource createCarteraResource){
+        var createCarteraCommand = CreateCarteraCommandFromResourceAssembler.toCommandFromResource(createCarteraResource);
+        var cartera = carteraCommandService.handle(createCarteraCommand);
+        return cartera.map(u->new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
+
 }
