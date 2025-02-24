@@ -2,20 +2,18 @@ package Finanzas05.Finanzas.cartera.domain.model.valueobject;
 
 public enum Capitalizacion {
 
-    Quincenal(15),
-    Mensual(12),
-    Bimestral(6),
-    Trimestral(4),
-    Cuatrimestral(3),
-    Semestral(2),
+    Quincenal(1),
+    Mensual(30),
+    Bimestral(60),
+    Trimestral(90),
+    Cuatrimestral(40),
+    Semestral(180),
     Anual(360);
-    private final int periodosPorAnio;
-
-    Capitalizacion(int periodosPorAnio) {
-        this.periodosPorAnio = periodosPorAnio;
+    private final int dias;
+    Capitalizacion(int dias) {
+        this.dias = dias;
     }
-
-    public int getPeriodosPorAnio() {
-        return periodosPorAnio;
+    public int getDias() {
+        return dias;
     }
 }

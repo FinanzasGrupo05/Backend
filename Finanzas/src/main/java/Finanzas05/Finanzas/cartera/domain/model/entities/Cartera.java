@@ -1,19 +1,14 @@
 package Finanzas05.Finanzas.cartera.domain.model.entities;
 
-import Finanzas05.Finanzas.cartera.domain.model.commands.CreateCarteraCommand;
 import Finanzas05.Finanzas.cartera.domain.model.valueobject.Capitalizacion;
 import Finanzas05.Finanzas.cartera.domain.model.valueobject.Status;
-import Finanzas05.Finanzas.cartera.domain.model.valueobject.TipoMoneda;
 import Finanzas05.Finanzas.cartera.domain.model.valueobject.TipoTasa;
 import Finanzas05.Finanzas.factura.domain.model.entities.Factura;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Setter;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -41,6 +36,14 @@ public class Cartera {
     private List<Factura> facturas;
 
     public Cartera(){}
+
+
+
+
+
+
+
+    //Getters y Setters
 
     public Long getId() {
         return id;

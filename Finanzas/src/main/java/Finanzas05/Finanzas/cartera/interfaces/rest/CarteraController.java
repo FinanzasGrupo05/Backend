@@ -4,6 +4,8 @@ import Finanzas05.Finanzas.cartera.application.internal.commandServices.CarteraC
 import Finanzas05.Finanzas.cartera.application.internal.queryServices.CarteraQueryService;
 import Finanzas05.Finanzas.cartera.domain.model.entities.Cartera;
 import Finanzas05.Finanzas.cartera.domain.model.queries.GetAllCarteraQuery;
+import Finanzas05.Finanzas.cartera.domain.model.queries.GetResultsQuery;
+import Finanzas05.Finanzas.cartera.interfaces.rest.resources.CalculosResource;
 import Finanzas05.Finanzas.cartera.interfaces.rest.resources.CarteraResource;
 import Finanzas05.Finanzas.cartera.interfaces.rest.resources.CreateCarteraResource;
 import Finanzas05.Finanzas.cartera.interfaces.rest.transformers.CarteraResourceFromEntityAssembler;
@@ -34,11 +36,21 @@ public class CarteraController {
         return ResponseEntity.ok(carteraResources);
     }
 
+    @GetMapping("/{carteraId}/resultados")
+    public ResponseEntity<List<CalculosResource>> obtenerResultados(@PathVariable Long carteraId) {
+        var resultados = carteraQueryService.getResultados(carteraId);
+        return ResponseEntity.ok(resultados);
+    }
+
     @PostMapping
     public ResponseEntity<Cartera> createCartera(@RequestBody CreateCarteraResource createCarteraResource){
         var createCarteraCommand = CreateCarteraCommandFromResourceAssembler.toCommandFromResource(createCarteraResource);
         var cartera = carteraCommandService.handle(createCarteraCommand);
         return cartera.map(u->new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+    @PostMapping("/id")
+    public ResponseEntity<Cartera> addAnotherFactura(){
+        return null;
     }
 
 }
