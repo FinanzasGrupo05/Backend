@@ -1,11 +1,13 @@
 package Finanzas05.Finanzas.cartera.application.internal.commandServices;
 
 import Finanzas05.Finanzas.cartera.domain.model.commands.CreateCarteraCommand;
+import Finanzas05.Finanzas.cartera.domain.model.commands.DeleteCarteraCommand;
 import Finanzas05.Finanzas.cartera.domain.model.entities.Cartera;
 import Finanzas05.Finanzas.cartera.domain.services.ICarteraCommandService;
 import Finanzas05.Finanzas.cartera.infrastructure.repositories.jpa.ICarteraRepository;
 import Finanzas05.Finanzas.factura.domain.model.entities.Factura;
 import Finanzas05.Finanzas.factura.infrastructure.repositories.jpa.IFacturaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,7 @@ public class CarteraCommandService implements ICarteraCommandService {
 
     @Override
     public Optional<Cartera> handle(CreateCarteraCommand command) {
+
         Cartera cartera = new Cartera();
         cartera.setNombreCartera(command.nombreCartera());
         cartera.setFechaDescuento(command.fechaDescuento());
@@ -32,15 +35,21 @@ public class CarteraCommandService implements ICarteraCommandService {
         cartera.setGastosInicio(command.gastosInicio());
         cartera.setGastosFinal(command.gastosFinal());
 
+        Cartera savedCartera = carteraRepository.save(cartera);
+
         if (command.facturasIds() != null && !command.facturasIds().isEmpty()) {
             List<Factura> facturas = facturaRepository.findAllById(command.facturasIds());
             for (Factura factura : facturas) {
-                factura.setCartera(cartera);
+                factura.setCartera(savedCartera);
             }
-            cartera.setFacturas(facturas);
+            facturaRepository.saveAll(facturas);
+            savedCartera.setFacturas(facturas);
         }
 
-        Cartera savedCartera = carteraRepository.save(cartera);
         return Optional.of(savedCartera);
+    }
+    @Override
+    public void handle(DeleteCarteraCommand command) {
+        carteraRepository.deleteById(command.carteraId());
     }
 }

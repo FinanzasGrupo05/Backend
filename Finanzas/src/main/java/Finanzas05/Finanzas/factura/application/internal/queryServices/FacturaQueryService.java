@@ -21,7 +21,7 @@ public class FacturaQueryService implements IFacturaQueryService {
 
     @Override
     public List<Factura> handle(GetAllFacturasQuery query) {
-        return facturaRepository.findAll();
+        return facturaRepository.findByCarteraIsNull();
     }
 
     @Override

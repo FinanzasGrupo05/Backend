@@ -1,5 +1,6 @@
 package Finanzas05.Finanzas.cartera.domain.model.entities;
 
+import Finanzas05.Finanzas.cartera.domain.model.commands.CreateCarteraCommand;
 import Finanzas05.Finanzas.cartera.domain.model.valueobject.Capitalizacion;
 import Finanzas05.Finanzas.cartera.domain.model.valueobject.Status;
 import Finanzas05.Finanzas.cartera.domain.model.valueobject.TipoTasa;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -33,14 +35,9 @@ public class Cartera {
     private Status estado;
 
     @OneToMany(mappedBy = "cartera", cascade = CascadeType.ALL)
-    private List<Factura> facturas;
+    private List<Factura> facturas = new ArrayList<>();
 
     public Cartera(){}
-
-
-
-
-
 
 
     //Getters y Setters
@@ -120,4 +117,6 @@ public class Cartera {
     public void setFacturas(List<Factura> facturas) {
         this.facturas = facturas;
     }
+
+
 }

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface IFacturaRepository extends JpaRepository<Factura,Long> {
     List<Factura> findByCarteraId(Long carteraId);
+    List<Factura> findByCarteraIsNull();
 }

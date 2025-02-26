@@ -1,7 +1,9 @@
 package Finanzas05.Finanzas.factura.interfaces.rest;
 
+import Finanzas05.Finanzas.cartera.domain.model.commands.DeleteCarteraCommand;
 import Finanzas05.Finanzas.factura.application.internal.commandServices.FacturaCommandService;
 import Finanzas05.Finanzas.factura.application.internal.queryServices.FacturaQueryService;
+import Finanzas05.Finanzas.factura.domain.model.commands.DeleteFacturaCommand;
 import Finanzas05.Finanzas.factura.domain.model.entities.Factura;
 import Finanzas05.Finanzas.factura.domain.model.queries.GetAllFacturasQuery;
 import Finanzas05.Finanzas.factura.interfaces.rest.resources.CreateFacturaResource;
@@ -39,6 +41,13 @@ public class FacturaController {
         var createFacturaCommand = CreateFacturaCommandFromResourceAssembler.toCommandFromResource(createFacturaResource);
         var factura = facturaCommandService.handle(createFacturaCommand);
         return factura.map(u->new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deletefactura(@PathVariable Long id){
+        var deleteFacturaCommand = new DeleteFacturaCommand(id);
+        facturaCommandService.handle(deleteFacturaCommand);
+        return ResponseEntity.ok("Factura with given id succesfully deleted");
     }
 
 }

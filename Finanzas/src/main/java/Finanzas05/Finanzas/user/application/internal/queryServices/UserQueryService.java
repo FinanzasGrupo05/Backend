@@ -2,6 +2,7 @@ package Finanzas05.Finanzas.user.application.internal.queryServices;
 
 import Finanzas05.Finanzas.user.domain.model.entities.User;
 import Finanzas05.Finanzas.user.domain.model.queries.GetAllUsersQuery;
+import Finanzas05.Finanzas.user.domain.model.queries.GetUsersByUsernameAndPasswordQuery;
 import Finanzas05.Finanzas.user.domain.services.IUserQueryService;
 import Finanzas05.Finanzas.user.infrastructure.repositories.jpa.IUserRepository;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,8 @@ public class UserQueryService implements IUserQueryService {
     @Override
     public List<User> handle(GetAllUsersQuery query) {
         return userRepository.findAll();
+    }
+    public User handle(GetUsersByUsernameAndPasswordQuery query) {
+        return userRepository.getUserByUsernameAndPassword(query.username(), query.password());
     }
 }

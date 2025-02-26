@@ -2,6 +2,7 @@ package Finanzas05.Finanzas.cartera.interfaces.rest;
 
 import Finanzas05.Finanzas.cartera.application.internal.commandServices.CarteraCommandService;
 import Finanzas05.Finanzas.cartera.application.internal.queryServices.CarteraQueryService;
+import Finanzas05.Finanzas.cartera.domain.model.commands.DeleteCarteraCommand;
 import Finanzas05.Finanzas.cartera.domain.model.entities.Cartera;
 import Finanzas05.Finanzas.cartera.domain.model.queries.GetAllCarteraQuery;
 import Finanzas05.Finanzas.cartera.domain.model.queries.GetResultsQuery;
@@ -36,7 +37,7 @@ public class CarteraController {
         return ResponseEntity.ok(carteraResources);
     }
 
-    @GetMapping("/{carteraId}/resultados")
+    @GetMapping("/resultados/{carteraId}")
     public ResponseEntity<List<CalculosResource>> obtenerResultados(@PathVariable Long carteraId) {
         var resultados = carteraQueryService.getResultados(carteraId);
         return ResponseEntity.ok(resultados);
@@ -48,9 +49,12 @@ public class CarteraController {
         var cartera = carteraCommandService.handle(createCarteraCommand);
         return cartera.map(u->new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
-    @PostMapping("/id")
-    public ResponseEntity<Cartera> addAnotherFactura(){
-        return null;
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCartera(@PathVariable Long id){
+        var deleteParkingCommand = new DeleteCarteraCommand(id);
+        carteraCommandService.handle(deleteParkingCommand);
+        return ResponseEntity.ok("Cartera with given id succesfully deleted");
     }
+
 
 }

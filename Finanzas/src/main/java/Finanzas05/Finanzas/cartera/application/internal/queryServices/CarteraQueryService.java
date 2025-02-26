@@ -37,40 +37,4 @@ public class CarteraQueryService implements ICarteraQueryService {
         return CalculoResourceFromEntityAssembler.toResourceFromEntity(cartera);
     }
 
-
-//    private double calcularInteresDescontado(Factura factura) {
-//        long diasPeriodo = ChronoUnit.DAYS.between(factura.getEmision(), factura.getVencimiento());
-//        double tasaPeriodo = Math.pow(1 + 0.12, (diasPeriodo / 30.0)) - 1;
-//        double tasaDescuento = tasaPeriodo / (1 + tasaPeriodo);
-//        return factura.getMonto() * tasaDescuento;
-//    }
-//
-//    private double calcularTCEA(Factura factura, double interesDescontado) {
-//        long diasPeriodo = ChronoUnit.DAYS.between(factura.getEmision(), factura.getVencimiento());
-//        double valorNeto = factura.getMonto() - interesDescontado;
-//        double valorEntregado = factura.getMonto();
-//        return Math.pow(valorEntregado / valorNeto, 360.0 / diasPeriodo) - 1;
-//    }
-//    @Override
-//    public List<GetResultsQuery> handle(GetResultsQuery query, Long carteraId) {
-//        return carteraRepository.findById(carteraId)
-//                .map(cartera -> {
-//                    List<Factura> facturas = facturaRepository.findByCarteraId(carteraId);
-//                    return facturas.stream().map(factura -> {
-//                        double interesDescontado = calcularInteresDescontado(factura);
-//                        double tcea = calcularTCEA(factura, interesDescontado);
-//
-//                        return new GetResultsQuery(
-//                                factura.getFacturaName(),
-//                                factura.getClienteName(),
-//                                factura.getMonto(),
-//                                factura.getEmision(),
-//                                factura.getVencimiento(),
-//                                interesDescontado,
-//                                "Descontada",
-//                                tcea
-//                        );
-//                    }).toList();
-//                }).orElse(Collections.emptyList());
-//    }
 }

@@ -1,6 +1,7 @@
 package Finanzas05.Finanzas.factura.application.internal.commandServices;
 
 import Finanzas05.Finanzas.factura.domain.model.commands.CreateFacturaCommand;
+import Finanzas05.Finanzas.factura.domain.model.commands.DeleteFacturaCommand;
 import Finanzas05.Finanzas.factura.domain.model.entities.Factura;
 import Finanzas05.Finanzas.factura.domain.services.IFacturaCommandService;
 import Finanzas05.Finanzas.factura.infrastructure.repositories.jpa.IFacturaRepository;
@@ -27,5 +28,10 @@ public class FacturaCommandService implements IFacturaCommandService {
             System.out.println(e.getMessage());
             return Optional.empty();
         }
+    }
+
+    @Override
+    public void handle(DeleteFacturaCommand command) {
+        facturaRepository.deleteById(command.facturaId());
     }
 }
