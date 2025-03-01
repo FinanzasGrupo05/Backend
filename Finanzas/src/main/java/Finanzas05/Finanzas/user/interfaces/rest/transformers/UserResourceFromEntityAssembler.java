@@ -5,6 +5,6 @@ import Finanzas05.Finanzas.user.interfaces.rest.resources.UserResource;
 
 public class UserResourceFromEntityAssembler {
     public static UserResource toResourceFromEntity(User entity){
-        return new UserResource(entity.getId(), entity.getUsername(), entity.getPassword(), entity.getName());
+        return new UserResource(entity.getId(), entity.getUsername(), entity.getPassword(), entity.getName(), entity.getSex());
     }
 }

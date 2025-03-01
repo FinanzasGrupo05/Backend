@@ -6,7 +6,7 @@ import Finanzas05.Finanzas.user.interfaces.rest.resources.CreateUserResource;
 
 public class CreateUserCommandFromResourceAssembler {
     public static CreateUserCommand toCommandFromResource(CreateUserResource resource){
-        return new CreateUserCommand(resource.name(), resource.username(), resource.password());
+        return new CreateUserCommand(resource.name(), resource.username(), resource.password(), resource.sex());
     }
 
 }

@@ -20,8 +20,6 @@ public class UserCommandService implements IUserCommandService {
     @Override
     public Optional<User> handle(CreateUserCommand command) {
         User user = new User(command);
-
-
         try {
             User exists = userRepository.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
             if (exists != null) { return Optional.of(exists); }

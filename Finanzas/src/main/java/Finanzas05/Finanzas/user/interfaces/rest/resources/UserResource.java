@@ -4,6 +4,7 @@ public record UserResource(
         Long id,
         String name,
         String username,
-        String password
+        String password,
+        Boolean sex
 ) {
 }
