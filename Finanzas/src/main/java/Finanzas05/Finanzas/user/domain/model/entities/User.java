@@ -31,4 +31,24 @@ public class User {
         this.password = command.password();
         this.sex = command.sex();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Boolean getSex() {
+        return sex;
+    }
 }
