@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/user")
+@CrossOrigin(origins = "https://finanzas-fchpamj0x-daniels-projects-63dd5b20.vercel.app")
 public class UserController {
 
     private final UserQueryService userQueryService;
